@@ -80,23 +80,35 @@ namespace Util
 	template <typename VertType>
 	void addSquare (Mesh<VertType>& mesh,
 			float side,
-			Math::Vec4f color = Math::Vec4f(1, 1, 1),
-			Math::Mat4f transf = Math::identity<4, float>(), 
+			Math::Vec4f color = Math::Vec4f(1, 1, 1, 1),
+			Math::Mat4f transf = Math::identity<4, float>(),
 			Math::Vec3f normal = Math::Vec3f(0, 0, 1)) 
 	{
 		int index = mesh.getVertCount();
 
-		addVert(mesh, Math::trunc<Math::Vec3f>(transf * Math::Vec4f(-side, -side, 0, 1)),
-				color, Math::trunc<Math::Vec3f>(transf * Math::Vec4f(normal)), Math::Vec2f(0, 0));
+		addVert(mesh,
+				Math::trunc<Math::Vec3f>(transf * Math::Vec4f(-side, -side, 0, 1)),
+				color,
+				Math::trunc<Math::Vec3f>(transf * Math::Vec4f(normal)),
+				Math::Vec2f(0, 0));
 	
-		addVert(mesh, Math::trunc<Math::Vec3f>(transf * Math::Vec4f( side, -side, 0, 1)),
-				color, Math::trunc<Math::Vec3f>(transf * Math::Vec4f(normal)), Math::Vec2f(0, 1));
+		addVert(mesh,
+				Math::trunc<Math::Vec3f>(transf * Math::Vec4f( side, -side, 0, 1)),
+				color,
+				Math::trunc<Math::Vec3f>(transf * Math::Vec4f(normal)),
+				Math::Vec2f(0, 1));
 	
-		addVert(mesh, Math::trunc<Math::Vec3f>(transf * Math::Vec4f( side,  side, 0, 1)),
-				color, Math::trunc<Math::Vec3f>(transf * Math::Vec4f(normal)), Math::Vec2f(1, 1));
+		addVert(mesh,
+				Math::trunc<Math::Vec3f>(transf * Math::Vec4f( side,  side, 0, 1)),
+				color,
+				Math::trunc<Math::Vec3f>(transf * Math::Vec4f(normal)),
+				Math::Vec2f(1, 1));
 	
-		addVert(mesh, Math::trunc<Math::Vec3f>(transf * Math::Vec4f(-side,  side, 0, 1)),
-				color, Math::trunc<Math::Vec3f>(transf * Math::Vec4f(normal)), Math::Vec2f(1, 0));
+		addVert(mesh,
+				Math::trunc<Math::Vec3f>(transf * Math::Vec4f(-side,  side, 0, 1)),
+				color,
+				Math::trunc<Math::Vec3f>(transf * Math::Vec4f(normal)),
+				Math::Vec2f(1, 0));
 
 		mesh.elementIndex.push_back(std::vector<int>{index + 0, index + 1, index + 2, index + 3});
 	}
@@ -130,11 +142,11 @@ namespace Util
 		Math::Mat4f transform = Math::translation<float>(0, 0, side);
 		
 		addSquare(mesh, side, color, transf * transform);
-		addSquare(mesh, side, color, transf * Math::rot4<float>( 3.1415926	, 1, 0, 0) * transform);
-		addSquare(mesh, side, color, transf * Math::rot4<float>( 3.1415926 / 2, 1, 0, 0) * transform);
-		addSquare(mesh, side, color, transf * Math::rot4<float>(-3.1415926 / 2, 1, 0, 0) * transform);
-		addSquare(mesh, side, color, transf * Math::rot4<float>( 3.1415926 / 2, 0, 1, 0) * transform);
-		addSquare(mesh, side, color, transf * Math::rot4<float>(-3.1415926 / 2, 0, 1, 0) * transform);
+		addSquare(mesh, side, color, transf * Math::rot4<float>( 180, 1, 0, 0) * transform);
+		addSquare(mesh, side, color, transf * Math::rot4<float>( 180 / 2, 1, 0, 0) * transform);
+		addSquare(mesh, side, color, transf * Math::rot4<float>(-180 / 2, 1, 0, 0) * transform);
+		addSquare(mesh, side, color, transf * Math::rot4<float>( 180 / 2, 0, 1, 0) * transform);
+		addSquare(mesh, side, color, transf * Math::rot4<float>(-180 / 2, 0, 1, 0) * transform);
 	}
 
 	template <typename VertType>
