@@ -22,9 +22,10 @@ int main (int argc, char const *argv[])
 		{GL_FRAGMENT_SHADER, "textureShader.frag"}
 	});
 
-	exampleShader.setMatrix("projectionMatrix", Math::identity<4, float>());
+	exampleShader.setMatrix("projectionMatrix", Math::projection<float>(
+			55.0, 1, 0.1, 1000));
 	exampleShader.setMatrix("viewMatrix", Math::identity<4, float>());
-	exampleShader.setMatrix("worldMatrix", Math::translation<float>(0, 0, 0));
+	exampleShader.setMatrix("worldMatrix", Math::translation<float>(0, -10, -50));
 
 	exampleShader.setVector("uColor", Math::Vec4f(1, 1, 1, 1));
 
