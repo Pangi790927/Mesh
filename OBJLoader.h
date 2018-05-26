@@ -11,26 +11,6 @@
 #include "Mesh.h"
 #include "Util.h"
 
-// class VertexNone 		{ public: constexpr static const char* name = "VertexNone"; };	
-// class VertexPosition 	{ public: constexpr static const char* name = "VertexPosition"; };
-// class VertexNormal 		{ public: constexpr static const char* name = "VertexNormal"; };
-// class VertexTexCoord 	{ public: constexpr static const char* name = "VertexTexCoord"; };
-// class VertexTexID 		{ public: constexpr static const char* name = "VertexTexID"; };
-// class VertexColor		{ public: constexpr static const char* name = "VertexColor"; };
-
-class VertexColor1 		{ public: constexpr static const char* name = "Color1"; };
-class VertexColor2 		{ public: constexpr static const char* name = "Color2"; };
-class VertexColor3 		{ public: constexpr static const char* name = "Color3"; };
-
-class VertexTexID1 		{ public: constexpr static const char* name = "Tex1"; };
-class VertexTexID2 		{ public: constexpr static const char* name = "Tex2"; };
-class VertexTexID3 		{ public: constexpr static const char* name = "Tex3"; };
-class VertexTexID4 		{ public: constexpr static const char* name = "Tex4"; };
-class VertexTexID5 		{ public: constexpr static const char* name = "Tex5"; };
-class VertexTexID6 		{ public: constexpr static const char* name = "Tex6"; };
-class VertexTexID7 		{ public: constexpr static const char* name = "Tex7"; };
-class VertexTexID8 		{ public: constexpr static const char* name = "Tex8"; };
-
 template <typename VertexType>
 class OBJLoader {
 public:

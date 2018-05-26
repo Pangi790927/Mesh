@@ -25,7 +25,7 @@ public:
 			}
 		);
 
-		vertex.template useIfExists<VertexPosition>([](auto&position) {
+		vertex.template useIfExists<VertexPosition>([](auto& position) {
 				glVertex3fv(position.getPtr());
 			}
 		);

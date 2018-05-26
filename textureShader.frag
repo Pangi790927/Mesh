@@ -5,8 +5,9 @@ uniform sampler2D texture;
 in vec3 normal;
 in vec4 color;
 in vec2 texCoord;
+in vec4 position;
 
-uniform vec3 lightDir = vec3(1, 1, 0);
+uniform vec3 lightDir = vec3(1, 1, 3);
 
 vec3 brightnessContrast(vec3 color, float brightness, float contrast)
 {
@@ -15,8 +16,8 @@ vec3 brightnessContrast(vec3 color, float brightness, float contrast)
 
 void main()
 {
-	float ambient = 0.0f;
-	float diffuze = 0.8f;
+	float ambient = 0.2;
+	float diffuze = 0.8;
 
 	/// lighting
 	diffuze *= max(dot(normal, lightDir), 0.0f);
@@ -30,5 +31,9 @@ void main()
 
 	fragColor.a = 1.0f;
 
-    gl_FragColor = fragColor; 
+    // gl_FragColor = vec4(position); 
+    // gl_FragColor = vec4(normal, 0); 
+    // gl_FragColor = vec4(texCoord, 0, 0); 
+    gl_FragColor = vec4(brightnessContrast(vec3(fragColor), -0.1, 1.3), 1.0)
+    		* (diffuze + ambient); 
 }

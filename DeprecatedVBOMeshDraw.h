@@ -5,8 +5,6 @@
 
 class DeprecatedVBOMeshDraw {
 public:
-	DeprecatedVBOMeshDraw() {}
-
 	static const int INDEX_INVALID = -1;
 
 	int vao = INDEX_INVALID;
@@ -22,6 +20,13 @@ public:
 	int lineCount = 0;
 	int triangleCount = 0;
 	int quadCount = 0;
+
+	DeprecatedVBOMeshDraw() {}
+	
+	template <typename VertType>
+	DeprecatedVBOMeshDraw (Mesh<VertType>& mesh) {
+		init(mesh);
+	}
 
 	template <typename VertType>
 	void init (Mesh<VertType>& mesh) {
@@ -95,26 +100,27 @@ public:
 
 		char *baseAddr = (char *)&(mesh.vertexList[0]);
 
-		if constexpr (VertType::template hasVertexAttribute<VertexPosition>()) {
+		if constexpr (VertType::template has_desc<VertexPosition>()) {
 			glEnableClientState(GL_VERTEX_ARRAY);
 			glVertexPointer(3, GL_FLOAT, sizeof(mesh.vertexList[0]),
 					(void *)((char *)&(mesh.vertexList[0].template get<VertexPosition>()) - baseAddr));
 		}
 
-		if constexpr (VertType::template hasVertexAttribute<VertexNormal>()) {
+		if constexpr (VertType::template has_desc<VertexNormal>()) {
 			glEnableClientState(GL_NORMAL_ARRAY);
 			glNormalPointer(GL_FLOAT, sizeof(mesh.vertexList[0]),
 					(void *)((char *)&(mesh.vertexList[0].template get<VertexNormal>()) - baseAddr));
 		}
 
-		if constexpr (VertType::template hasVertexAttribute<VertexTexCoord>()) {
+		if constexpr (VertType::template has_desc<VertexTexCoord>()) {
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			glTexCoordPointer(2, GL_FLOAT, sizeof(mesh.vertexList[0]),
 					(void *)((char *)&(mesh.vertexList[0].template get<VertexTexCoord>()) - baseAddr));
 		}
 
-		if constexpr (VertType::template hasVertexAttribute<VertexColor>()) {
+		if constexpr (VertType::template has_desc<VertexColor>()) {
 			glEnableClientState(GL_COLOR_ARRAY);
+			std::cout << "color" << std::endl;
 			glColorPointer(4, GL_FLOAT, sizeof(mesh.vertexList[0]),
 					(void *)((char *)&(mesh.vertexList[0].template get<VertexColor>()) - baseAddr));
 		}
