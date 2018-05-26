@@ -32,8 +32,13 @@ int main (int argc, char const *argv[])
 		{GL_FRAGMENT_SHADER, "textureShader.frag"}
 	});
 
-	shader.setMatrix("projectionMatrix", Math::projection<float>(
-			55.0, 1, 0.1, 1000));
+	newWindow.setResize([&] (int x, int y, int w, int h){
+		newWindow.focus();
+		glViewport(0, 0, w, h);
+		shader.setMatrix("projectionMatrix", Math::projection<float>(
+				55.0, newWindow.width / (float)newWindow.height, 0.1, 1000));
+	});
+
 	shader.setMatrix("viewMatrix", Math::identity<4, float>());
 	shader.setMatrix("worldMatrix", Math::translation<float>(0, -10, -50));
 
@@ -50,12 +55,12 @@ int main (int argc, char const *argv[])
 		if (newWindow.handleInput())
 			if (newWindow.keyboard.getKeyState(newWindow.keyboard.ESC))
 				newWindow.requestClose();
+		
 		newWindow.focus();
-
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		FixedFunctionMeshDraw().draw(mesh, shader);
 		// gMesh.draw(shader);
 		// gdMesh.draw(shader);
-		
 		newWindow.swapBuffers();
 	}
 	return 0;
