@@ -57,13 +57,13 @@ struct VertexNode : VertexNode<Args...> {
 
 	template <typename FuncType>
 	void mapFunc (FuncType&& func) {
-		func(data);
+		func(*this);
 		ChildNode::mapFunc(func);
 	}
 
 	template <typename FuncType>
 	void mapFunc (FuncType&& func) const {
-		func(data);
+		func(*this);
 		ChildNode::mapFunc(func);
 	}
 };
@@ -109,12 +109,12 @@ struct VertexNode<Type, Desc> {
 
 	template <typename FuncType>
 	void mapFunc (FuncType&& func) {
-		func(data);
+		func(*this);
 	}
 
 	template <typename FuncType>
 	void mapFunc (FuncType&& func) const {
-		func(data);
+		func(*this);
 	}
 };
 
@@ -187,10 +187,11 @@ struct Vertex : VertexNode<DataType, Descriptor, Args...> {
 		;
 	}
 
-	friend std::ostream& operator << (std::ostream& stream, const Vertex& arg)
-	{
-		auto print = [&] (auto& data) {
-			stream << data << ", ";
+	friend std::ostream& operator << (std::ostream& stream, const Vertex& arg) {
+		stream << "Node: " << std::endl;
+		auto print = [&] (auto& node) {
+			stream << std::remove_reference<decltype(node)>::type::DescType::name <<
+				"\n" << node.data << std::endl;
 		};
 		arg.mapFunc(print);
 		return stream;
