@@ -1,29 +1,7 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
-namespace Util
-{
-	template <typename A, typename B>
-	struct same_class {
-		const static bool value = false;
-	};
-
-	template <typename A>
-	struct same_class<A, A> {
-		const static bool value = true;
-	};
-
-	template <typename A, typename B, int value>
-	struct if_true {
-		using type = A;
-	};
-
-	template <typename A, typename B>
-	struct if_true<A, B, false> {
-		using type = B;
-	};
-}
-
+#include "Util.h"
 
 template <typename Type, typename Desc, typename ...Args>
 struct VertexNode : VertexNode<Args...> {
