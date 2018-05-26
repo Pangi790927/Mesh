@@ -1,5 +1,13 @@
 #include "OpenglWindow.h"
 #include "ShaderProgram.h"
+
+// names for the vertex
+struct VertexTexID {};
+struct VertexTexCoord {};
+struct VertexNormal {};
+struct VertexPosition {};
+struct VertexColor {};
+
 #include "Mesh.h"
 #include "OBJLoader.h"
 #include "FixedFunctionMeshDraw.h"

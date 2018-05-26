@@ -219,24 +219,4 @@ struct Vertex : VertexNode<DataType, Descriptor, Args...> {
 	}
 };
 
-struct VertexTexID {};
-struct VertexTexCoord {};
-struct VertexNormal {};
-struct VertexPosition {};
-struct VertexColor {};
-
-// Example:
-// Vertex <
-// 	char,	Desc0,
-// 	char,	Desc1,
-// 	char,	Desc2,
-// 	char,	Desc3,
-// 	char,	Desc4,
-// 	char,	Desc5,
-// 	char,	Desc6,
-// 	char,	Desc7,
-// 	char,	Desc8,
-// 	char,	Desc9
-// > myVert('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
-
 #endif
