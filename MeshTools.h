@@ -43,10 +43,11 @@ namespace Util
 			Math::Vec4f color = Math::Vec4f(1, 1, 1),
 			Math::Mat4f transf = Math::identity<4, float>())
 	{
+		using namespace Math;
 		int index = mesh.getVertCount();
 
-		addVert(mesh, Math::trunc<Math::Vec3f>(transf * A), color);
-		addVert(mesh, Math::trunc<Math::Vec3f>(transf * B), color);
+		addVert(mesh, trunc<Vec3f>(transf * Point4f(A, 1)), color);
+		addVert(mesh, trunc<Vec3f>(transf * Point4f(B, 1)), color);
 
 		mesh.elementIndex.push_back(std::vector<int>{index + 0, index + 1});
 	}
@@ -110,7 +111,26 @@ namespace Util
 				Math::trunc<Math::Vec3f>(transf * Math::Vec4f(normal)),
 				Math::Vec2f(1, 0));
 
-		mesh.elementIndex.push_back(std::vector<int>{index + 0, index + 1, index + 2, index + 3});
+		mesh.elementIndex.push_back(std::vector<int>{
+				index + 0, index + 1, index + 2, index + 3});
+	}
+
+	template <typename VertType>
+	void addSquareW (Mesh<VertType>& mesh,
+			float side,
+			Math::Vec4f color = Math::Vec4f(1, 1, 1, 1),
+			Math::Mat4f transf = Math::identity<4, float>())
+	{
+		using namespace Math;
+
+		addLine(mesh, Point3f(-1, -1, 0) * side,
+				Point3f(1, -1, 0) * side, color, transf);
+		addLine(mesh, Point3f(1, -1, 0) * side,
+				Point3f(1, 1, 0) * side, color, transf);
+		addLine(mesh, Point3f(1, 1, 0) * side,
+				Point3f(-1, 1, 0) * side, color, transf);
+		addLine(mesh, Point3f(-1, 1, 0) * side,
+				Point3f(-1, -1, 0) * side, color, transf);
 	}
 
 	template <typename VertType>

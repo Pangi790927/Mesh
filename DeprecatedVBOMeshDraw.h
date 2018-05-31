@@ -21,11 +21,44 @@ public:
 	int triangleCount = 0;
 	int quadCount = 0;
 
+	bool isFree = true;
+
 	DeprecatedVBOMeshDraw() {}
-	
+
 	template <typename VertType>
 	DeprecatedVBOMeshDraw (Mesh<VertType>& mesh) {
 		init(mesh);
+	}
+
+	DeprecatedVBOMeshDraw (const DeprecatedVBOMeshDraw& other) = delete;
+	
+	DeprecatedVBOMeshDraw (DeprecatedVBOMeshDraw&& other) {
+		movOp(other);
+	}
+	
+	DeprecatedVBOMeshDraw& operator = (const DeprecatedVBOMeshDraw& other) = delete;
+	
+	DeprecatedVBOMeshDraw& operator = (DeprecatedVBOMeshDraw&& other) {
+		return movOp(other);
+	}
+
+	DeprecatedVBOMeshDraw& movOp (DeprecatedVBOMeshDraw& other) {
+		vao = other.vao;
+		vertexVBO = other.vertexVBO;
+		indexPointVBO = other.indexPointVBO;
+		indexLineVBO = other.indexLineVBO;
+		indexTriangleVBO = other.indexTriangleVBO;
+		indexQuadVBO = other.indexQuadVBO;
+
+		pointCount = other.pointCount;
+		lineCount = other.lineCount;
+		triangleCount = other.triangleCount;
+		quadCount = other.quadCount;
+
+		isFree = false;
+		other.isFree = true;
+
+		return *this;
 	}
 
 	template <typename VertType>
@@ -35,6 +68,8 @@ public:
 
 		if (mesh.elementIndex.size() == 0)
 			return;
+
+		isFree = false;
 
 		std::vector<int> pointElemnts;
 		std::vector<int> lineElemnts;
@@ -161,7 +196,7 @@ public:
 		glBindVertexArray(0);
 	}
 
-	~DeprecatedVBOMeshDraw() {
+	void freeMem() {
 		glDeleteBuffers(1, (GLuint*)&vertexVBO);
 
 		if (indexPointVBO != INDEX_INVALID)
@@ -175,6 +210,11 @@ public:
 
 		if (indexQuadVBO != INDEX_INVALID)
 			glDeleteBuffers(1, (GLuint*)&indexQuadVBO);
+	}
+
+	~DeprecatedVBOMeshDraw() {
+		if (!isFree)
+			freeMem();
 	}
 };
 

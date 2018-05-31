@@ -27,6 +27,8 @@ public:
 	int lineCount = 0;
 	int triangleCount = 0;
 	int quadCount = 0;
+
+	bool isFree = true;
 	
 	DynamicVBOMeshDraw() {};
 
@@ -35,6 +37,36 @@ public:
 		init(mesh);
 	};
 
+	DynamicVBOMeshDraw (const DynamicVBOMeshDraw& other) = delete;
+	
+	DynamicVBOMeshDraw (DynamicVBOMeshDraw&& other) {
+		movOp(other);
+	}
+	
+	DynamicVBOMeshDraw& operator = (const DynamicVBOMeshDraw& other) = delete;
+	
+	DynamicVBOMeshDraw& operator = (DynamicVBOMeshDraw&& other) {
+		return movOp(other);
+	}
+
+	DynamicVBOMeshDraw& movOp (DynamicVBOMeshDraw& other) {
+		vao = other.vao;
+		vertexVBO = other.vertexVBO;
+		indexPointVBO = other.indexPointVBO;
+		indexLineVBO = other.indexLineVBO;
+		indexTriangleVBO = other.indexTriangleVBO;
+		indexQuadVBO = other.indexQuadVBO;
+
+		pointCount = other.pointCount;
+		lineCount = other.lineCount;
+		triangleCount = other.triangleCount;
+		quadCount = other.quadCount;
+		isFree = false;
+		other.isFree = true;
+
+		return *this;
+	}
+
 	template <typename VertType>
 	void init (Mesh<VertType>& mesh) {
 		if (mesh.vertexList.size() == 0)
@@ -42,6 +74,8 @@ public:
 
 		if (mesh.elementIndex.size() == 0)
 			return;
+
+		isFree = false;
 
 		std::vector<int> pointElemnts;
 		std::vector<int> lineElemnts;
@@ -289,7 +323,7 @@ public:
 		glBindVertexArray(0);
 	}
 
-	~DynamicVBOMeshDraw() {
+	void freeMem() {
 		glDeleteBuffers(1, (GLuint*)&vertexVBO);
 
 		if (indexPointVBO != INDEX_INVALID)
@@ -303,6 +337,11 @@ public:
 
 		if (indexQuadVBO != INDEX_INVALID)
 			glDeleteBuffers(1, (GLuint*)&indexQuadVBO);
+	}
+
+	~DynamicVBOMeshDraw() {
+		if (!isFree)
+			freeMem();
 	}
 };
 
