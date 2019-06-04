@@ -169,7 +169,7 @@ public:
 		glBindVertexArray(vao);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
-		
+
 		if (indexPointVBO != INDEX_INVALID) {
 			glDrawElements(GL_POINTS, pointCount * 1, GL_UNSIGNED_INT, (char*)NULL + 0);
 		}
