@@ -121,6 +121,7 @@ public:
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVBO);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.size() * sizeof(int),
 					&(buffer[0]), GL_STATIC_DRAW);	
+			return true;
 		};
 
 		storeElements(indexPointVBO, pointElemnts);
